@@ -24,9 +24,9 @@ public class PanelDescarga extends JPanel implements ActionListener {
 	    	principal = ventana;
 		    setLayout(new GridLayout(1,3));
 
-	        setBorder( BorderFactory.createTitledBorder( "Objetos a enviar" ) );
+	        setBorder( BorderFactory.createTitledBorder( "Archivo a enviar" ) );
 
-	        solicitar = new JLabel( "Número de objetos a enviar" );
+	        solicitar = new JLabel( "Ruta del archivo a enviar" );
 	        add( solicitar );
 	        
 	        conexion = new JTextField( );

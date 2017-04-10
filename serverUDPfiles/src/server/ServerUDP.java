@@ -60,18 +60,31 @@ class ServerUDP {
 			int sizeSeq = in.readInt();
 			byte[] seq1 = new byte[sizeSeq];
 			in.read(seq1, 0, sizeSeq);
+			
+			int sizeEspacio1 = in.readInt();
+			byte[] espacio1 = new byte[sizeEspacio1];
+			in.read(espacio1, 0, sizeEspacio1);
 
 			int sizeFecha = in.readInt();
 			byte[] fecha1 = new byte[sizeFecha];
 			in.read(fecha1, 0, sizeFecha);
+			
+			/*int sizeEspacio2 = in.readInt();
+			byte[] espacio2 = new byte[sizeEspacio2];
+			in.read(espacio2, 0, sizeEspacio2);*/
+			
+			int sizeContenido = in.readInt();
+			byte[] contenido = new byte[sizeContenido];
+			in.read(contenido, 0, sizeContenido);
+			
 
-			byte lastModifiedDate = in.readByte();
+			
 
 			// read done
 
 			System.out.println(new String(seq1));
 			System.out.println(new String(fecha1));
-			System.out.println(lastModifiedDate);
+			System.out.println(new String(contenido));
 			/*String linea = new String(receiveData);
 			String[] s=linea.split("=");
 			String[] s1 = s[1].split("t");

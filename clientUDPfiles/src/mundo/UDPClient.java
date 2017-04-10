@@ -33,7 +33,6 @@ public class UDPClient {
 		int tamañoArchivo=(int)archivo.length();
 		byte fileContent[] = new byte[tamañoArchivo];
 		fi.read(fileContent);
-		System.out.println(file);
 		int sendBufferSize=5000;
 		boolean termino=false;
 			byte[] sendData = new byte[sendBufferSize];
@@ -43,7 +42,7 @@ public class UDPClient {
 				    Date lastModifiedDate = new Date();
 				    DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 					String reportDate = df.format(lastModifiedDate);
-					System.out.println(reportDate);
+				
 
 				    byte[] schemaNameBytes = schemaName.getBytes();
 				    byte[] reportDateBytes = reportDate.getBytes();
@@ -54,16 +53,23 @@ public class UDPClient {
 				    	termino=true;
 				    }
 				    else{
-				    sendData[i]=fileContent[i];
+				    	for (int j=0;j<fileContent.length;j++){
+				    		sendData[j] = fileContent[j];
+				    		fileContent[j] = fileContent[j+sendBufferSize];
+				    	}
+				    
 				    }
 
 				    ByteArrayOutputStream byteOs = new ByteArrayOutputStream();
 				    DataOutputStream out = new DataOutputStream(byteOs);
 				    out.writeInt(schemaNameBytes.length);
 				    out.write(schemaNameBytes);
+				    System.out.println(new String(schemaName));
 				    out.writeLong(reportDateBytes.length);
+				    System.out.println(new String(reportDate));
 				    out.write(reportDateBytes);
 				    out.writeInt(sendData.length);
+				    System.out.println(new String(sendData));
 				    out.write(sendData);
 				    byte[] allWrittenBytes = byteOs.toByteArray();
 				  
