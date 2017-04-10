@@ -3,6 +3,7 @@ import java.io.*;
 import java.net.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 import Interfaz.VentanaPrincipal;
@@ -54,9 +55,11 @@ public class UDPClient {
 				    }
 				    else{
 				    	for (int j=0;j<fileContent.length;j++){
+				    		//guardo en el sendData lo que cabe del fileContent
 				    		sendData[j] = fileContent[j];
-				    		fileContent[j] = fileContent[j+sendBufferSize];
 				    	}
+				    	//elimino los datos del fileContent que ya están en el sendData
+				    	Arrays.copyOfRange(fileContent, 0, sendBufferSize-1);
 				    
 				    }
 
@@ -75,6 +78,7 @@ public class UDPClient {
 				  
 				   
 				    System.out.println("ESCRIBIO");
+				    //HACER HASH DE allWrittenBytes, tengo que tener también en cuenta esto al mandarlo ,son más bytes
 				    DatagramPacket dp = new DatagramPacket(allWrittenBytes, allWrittenBytes.length, IPAddress, PORT);
 				    clientSocket.send(dp);
 				    System.out.println("TERMINO");

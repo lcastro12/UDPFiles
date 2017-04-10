@@ -85,18 +85,17 @@ class ServerUDP {
 			System.out.println(new String(seq1));
 			System.out.println(new String(fecha1));
 			System.out.println(new String(contenido));
-			/*String linea = new String(receiveData);
-			String[] s=linea.split("=");
-			String[] s1 = s[1].split("t");
+			String seq2 = new String(seq1);
+			String[] s1 = seq2.split(":");
 			String seq = s1[0];
-			String fecha = s[2];
+			String fecha = new String(fecha1);
 			DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 			Date fechaSalida = df.parse(fecha);
 			Date actual = new Date();
 			long dif = getDateDiff(fechaSalida,actual,TimeUnit.MILLISECONDS);
 			String content = seq + ":" + dif + "ms";
-			new ServerThreadU(receivePacket.getAddress(), receivePacket.getPort(),nuevo,content).escribir();*/
-			/*if(clientes.size()!=0){
+			new ServerThreadU(receivePacket.getAddress(), receivePacket.getPort(),nuevo,content).escribir();
+			if(clientes.size()!=0){
 				for(int i=0;i<clientes.size();i++){
 					int numRecibidos = 0;
 					int numPerdidos = 0;
@@ -130,13 +129,13 @@ class ServerUDP {
 					}catch(Exception e){
 						System.out.println("Error while reading file line by line:" + e.getMessage());                      
 					}
-					int promedio= tiempoPromedio/(numRecibidos+numPerdidos);
+					//int promedio= tiempoPromedio/(numRecibidos+numPerdidos);
 					System.out.println("RESUMEN: Para el cliente " + clientes.get(i) );
 					System.out.println("Se recibieron " + numRecibidos + " objetos" );
 					System.out.println("Se perdieron " + numPerdidos + " objetos" );
-					System.out.println("El tiempo promedio es " + promedio + "ms");
+					//System.out.println("El tiempo promedio es " + promedio + "ms");
 				}	
-			}*/
+			}
 		}
 	}
 
