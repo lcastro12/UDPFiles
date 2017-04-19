@@ -1,6 +1,7 @@
 package server;
 import java.io.*;
 import java.net.*;
+import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,6 +17,33 @@ class ServerUDP {
 		long diffInMillies = date2.getTime() - date1.getTime();
 		return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
 	}
+	
+	private static byte[] getKeyedDigest(byte[] buffer){
+		try{
+			MessageDigest md5= MessageDigest.getInstance("MD5");
+			md5.update(buffer);
+			return md5.digest();
+		}
+		catch(Exception e){
+			return null;
+		}
+	}
+
+	public static byte[] calcular(byte[] text){
+		try{
+			String s1= new String(text);
+			System.out.println("dato original:" + s1 );
+			byte [] digest= getKeyedDigest(text);
+			String s2= new String(digest);
+			System.out.println("digest:"+ s2);
+			return digest;
+		}
+		catch(Exception e){
+			System.out.println("Excepcion:"+ e.getMessage());
+			return null;
+		}
+	}
+	
 	public static void main(String args[]) throws Exception
 	{
 		// TODO Auto-generated method stub
@@ -35,13 +63,9 @@ class ServerUDP {
 		{
 
 			serverSocket.receive(receivePacket);
-			System.out.println(new String(receivePacket.getData()) + ":: data receive packet");
-			System.out.println(receivePacket.getPort());
 			String cliente= receivePacket.getAddress() + "," + receivePacket.getPort();
 			if(clientes.size()!=0){
 				for(int i=0;i<clientes.size()&& nuevo;i++){
-					System.out.println(clientes.get(i));
-					System.out.println(cliente);
 					if(cliente.equals(clientes.get(i))){
 						nuevo=false;
 					}
@@ -56,6 +80,7 @@ class ServerUDP {
 
 			}
 			DataInputStream in = new DataInputStream(new ByteArrayInputStream(receiveData));
+			
 
 			int sizeSeq = in.readInt();
 			byte[] seq1 = new byte[sizeSeq];
@@ -72,7 +97,7 @@ class ServerUDP {
 			/*int sizeEspacio2 = in.readInt();
 			byte[] espacio2 = new byte[sizeEspacio2];
 			in.read(espacio2, 0, sizeEspacio2);*/
-			
+		
 			int sizeContenido = in.readInt();
 			byte[] contenido = new byte[sizeContenido];
 			in.read(contenido, 0, sizeContenido);
@@ -82,9 +107,6 @@ class ServerUDP {
 
 			// read done
 
-			System.out.println(new String(seq1));
-			System.out.println(new String(fecha1));
-			System.out.println(new String(contenido));
 			String seq2 = new String(seq1);
 			String[] s1 = seq2.split(":");
 			String seq = s1[0];
